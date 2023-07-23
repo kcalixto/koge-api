@@ -11,7 +11,15 @@ import (
 )
 
 func Handler(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	db, err := dynamodb.NewDynamoDB("production")
+	env, ok := os.LookupEnv("NODE_ENV")
+	if !ok {
+		return events.APIGatewayProxyResponse{
+			Body:       "NODE_ENV not found",
+			StatusCode: 500,
+		}, nil
+	}
+
+	db, err := dynamodb.NewDynamoDB(env)
 	if err != nil {
 		log.Fatal(err)
 	}

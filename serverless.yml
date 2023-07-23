@@ -1,6 +1,22 @@
 service: koge-api
 
+frameworkVersion: "3"
+
 custom:
+  domain:
+    dev: koge.dev.toools.space
+    prd: koge.toools.space
+
+  customCertificate:
+    certificateName: ${self:custom.domain.${self:provider.stage}}
+    hostedZoneNames: ${self:custom.domain.${self:provider.stage}}.
+
+  customDomain:
+    certificateName: ${self:custom.domain.${self:provider.stage}}
+    domainName: ${self:custom.domain.${self:provider.stage}}
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+
   NodeEnv:
     dev: development
     prd: production

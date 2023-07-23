@@ -11,7 +11,7 @@ import (
 )
 
 func Handler(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	db, err := dynamodb.NewDynamoDB("local")
+	db, err := dynamodb.NewDynamoDB("production")
 	if err != nil {
 		log.Fatal(err)
 	}

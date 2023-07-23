@@ -30,6 +30,12 @@ jobs:
       - name: Build
         run: make build
 
+      - name: create certificate
+        run: sls create-cert
+      
+      - name: create domain
+        run: sls create_domain
+
       - name: Deploy
         run: make deploy
         env:

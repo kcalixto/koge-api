@@ -38,6 +38,17 @@ provider:
   memorySize: 128
   timeout: 30
   logRetentionInDays: 1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.TableName.${self:provider.stage}}"
 
   environment:
     NODE_ENV: ${self:custom.NodeEnv.${self:provider.stage}}

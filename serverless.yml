@@ -1,0 +1,31 @@
+service: koge-api
+
+custom:
+  NodeEnv:
+    dev: development
+    prd: production
+
+provider:
+  name: aws
+  runtime: go1.x
+  stage: ${opt:stage, 'prd'}
+  region: sa-east-1
+  memorySize: 128
+  timeout: 30
+  logRetentionInDays: 1
+
+  environment:
+    NODE_ENV: ${self:custom.NodeEnv.${self:provider.stage}}
+
+functions:
+  handler:
+    handler: bin/handler
+    events:
+      - http:
+          path: /
+          method: GET
+          cors: true
+
+plugins:
+  - serverless-certificate-creator
+  - serverless-domain-manager

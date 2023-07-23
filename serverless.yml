@@ -25,6 +25,11 @@ custom:
     dev: koge-tb-dsv
     prd: koge-tb
 
+package:
+  individually: true
+  include:
+    - bin/**
+
 provider:
   name: aws
   runtime: go1.x

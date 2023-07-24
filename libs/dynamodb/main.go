@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
@@ -22,8 +23,12 @@ var tables = map[string]string{
 }
 
 func NewDynamoDB(env string) (*Repository, error) {
-	cfg := aws.Config{
-		Region: "sa-east-1",
+	cfg, err := config.LoadDefaultConfig(
+		context.TODO(),
+		config.WithRegion("sa-east-1"),
+	)
+	if err != nil {
+		return nil, err
 	}
 
 	svc := dynamodb.NewFromConfig(cfg)
@@ -39,8 +44,8 @@ func (r *Repository) Put(ctx context.Context, v map[string]string) error {
 		return err
 	}
 
-	item["PK"] = makeKey("PK", v["teste"])
-	item["SK"] = makeKey("SK", v["test"])
+	item["pk"] = makeKey("PK", v["teste"])
+	item["sk"] = makeKey("SK", v["test"])
 
 	_, err = r.conn.PutItem(ctx, &dynamodb.PutItemInput{
 		TableName: aws.String(r.tableName),

@@ -1,0 +1,115 @@
+openapi: 3.0.3
+info:
+  title: Koge
+  description: Trello 2
+  version: 0.0.1
+
+servers:
+  - url: https://koge.dev.toools.space
+    description: Development ULR
+  - url: https://koge.toools.space
+    description: Production ULR
+
+paths:
+  /get-board:
+    post:
+      summary: "Get board"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BoardRequest"
+
+      responses:
+        "200":
+          description: "ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BoardResponse"
+        "400":
+          description: "BadRequest"
+
+components:
+  schemas:
+    BoardRequest:
+      type: object
+      properties:
+        username:
+          type: string
+
+    BoardResponse:
+      type: object
+      properties:
+        board:
+          $ref: "#/components/schemas/board"
+
+    label:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        idBoard:
+          type: string
+        color:
+          type: string
+
+    list:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        idBoard:
+          type: string
+        pos:
+          type: integer
+
+    card:
+      type: object
+      properties:
+        id:
+          type: string
+        idList:
+          type: string
+        idBoard:
+          type: string
+        idLabels:
+          type: array
+          items:
+            $ref: "#/components/schemas/label"
+        name:
+          type: string
+        pos:
+          type: integer
+        cover:
+          type: object
+          properties:
+            color:
+              type: string
+
+    board:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        labels:
+          type: array
+          items:
+            $ref: "#/components/schemas/label"
+
+        lists:
+          type: array
+          items:
+            $ref: "#/components/schemas/list"
+
+        cards:
+          type: array
+          items:
+            $ref: "#/components/schemas/card"

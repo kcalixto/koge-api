@@ -1,5 +1,5 @@
 build:
-	sam build --config-file samconfig.toml --parameter-overrides "ParameterKey=Stage,ParameterValue=$(STAGE)"
+	sam build --config-env $(STAGE)
 
 deploy: 
-	sam deploy --config-file samconfig.toml --parameter-overrides "ParameterKey=Stage,ParameterValue=$(STAGE)"
+	sam deploy --config-env $(STAGE)

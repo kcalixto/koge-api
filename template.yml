@@ -40,6 +40,8 @@ Resources:
       CodeUri: handler/
       Handler: handler
       Runtime: go1.x
+      Metadata:
+        BuildMethod: makefile
       Policies:
         - Version: "2012-10-17"
           Statement:

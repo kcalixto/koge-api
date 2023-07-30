@@ -1,3 +1,5 @@
+include lambda.mk
+
 build:
 	sam build --config-env $(STAGE)
 

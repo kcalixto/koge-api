@@ -47,11 +47,8 @@ jobs:
       - name: Build
         run: make build
 
-      - name: create certificate
-        run: sls create-cert --stage ${{ env.STAGE }}
-      
-      - name: create domain
-        run: sls create_domain --stage ${{ env.STAGE }}
+      - name: drop domain
+        run: sls delete_domain --stage ${{ env.STAGE }}
 
-      - name: Deploy
-        run: make deploy STAGE=${{ env.STAGE }}
+      # - name: Deploy
+        # run: make deploy STAGE=${{ env.STAGE }}

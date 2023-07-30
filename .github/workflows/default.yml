@@ -20,9 +20,9 @@ jobs:
       - name: Set STAGE variable
         run: |
           if [[ "${{ github.base_ref }}" == "main" || "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "STAGE=prd" >> $GITHUB_ENV
+            echo "STAGE=production" >> $GITHUB_ENV
           else
-            echo "STAGE=dev" >> $GITHUB_ENV
+            echo "STAGE=development" >> $GITHUB_ENV
           fi
 
       - name: Print STAGE variable
@@ -45,10 +45,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: make build
+        run: STAGE=${{ env.STAGE }} make build
 
-      - name: drop domain
-        run: sls delete_domain --stage ${{ env.STAGE }}
-
-      # - name: Deploy
-        # run: make deploy STAGE=${{ env.STAGE }}
+      - name: Deploy
+        run: STAGE=${{ env.STAGE }} make deploy

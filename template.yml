@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: koge-api
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 128
+
+Parameters:
+  Stage:
+    Type: String
+    Default: production
+    AllowedValues:
+      - development
+      - production
+
+Resources:
+  KogeDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "koge-tb-${Stage}"
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  KogeApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: handler/
+      Handler: handler
+      Runtime: go1.x
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:DeleteItem
+              Resource: "*"
+      Architectures:
+        - x86_64
+      Environment:
+        Variables:
+          NODE_ENV: !Ref Stage
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET

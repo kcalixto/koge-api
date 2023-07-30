@@ -1,0 +1,21 @@
+version = 0.1
+[development.deploy.parameters]
+stack_name = "koge-api-development"
+resolve_s3 = true
+s3_prefix = "koge-api-development"
+region = "sa-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+image_repositories = []
+parameter_overrides = "Stage=\"development\""
+
+[production.deploy.parameters]
+stack_name = "koge-api-production"
+resolve_s3 = true
+s3_prefix = "koge-api-production"
+region = "sa-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+image_repositories = []

@@ -1,5 +1,5 @@
 build:
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o bin/handler handler/main.go
+	sam build --config-file samconfig.toml --parameter-overrides "ParameterKey=Stage,ParameterValue=$(STAGE)"
 
-deploy: build
-	sls deploy --verbose --stage $(STAGE)
+deploy: 
+	sam deploy --config-file samconfig.toml --parameter-overrides "ParameterKey=Stage,ParameterValue=$(STAGE)"

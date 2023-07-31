@@ -1,6 +1,6 @@
 include lambda.mk
 
-build:
+build: build-KogeApiFunction
 	sam build --config-env $(STAGE)
 
 deploy: 

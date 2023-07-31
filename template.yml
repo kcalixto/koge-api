@@ -36,12 +36,12 @@ Resources:
 
   KogeApiFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
     Properties:
-      CodeUri: handler/
-      Handler: handler
+      CodeUri: .
+      Handler: handler/handler
       Runtime: go1.x
-      Metadata:
-        BuildMethod: makefile
       Policies:
         - Version: "2012-10-17"
           Statement:

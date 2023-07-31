@@ -17,9 +17,9 @@ type Repository struct {
 }
 
 var tables = map[string]string{
-	"local":       "koge-tb-dsv",
-	"development": "koge-tb-dsv",
-	"production":  "koge-tb",
+	"local":       "koge-tb-development",
+	"development": "koge-tb-development",
+	"production":  "koge-tb-production",
 }
 
 func NewDynamoDB(env string) (*Repository, error) {

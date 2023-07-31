@@ -43,6 +43,8 @@ Resources:
       Handler: main
       Runtime: go1.x
       Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref KogeDynamoDBTable
         - Version: "2012-10-17"
           Statement:
             - Effect: Allow
